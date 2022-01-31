@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "pythonproject"
+version = "0.1.0"
+description = ""
+authors = ["Isabelle Chen <isabellechen2023@u.northwestern.edu>"]
+
+
+[tool.poetry.dependencies]
+python = "^3.8"
+numpy = "1.21.1"
+pandas = "^0.25.1"
+matplotlib = "^3.0.3"
+
+[tool.poetry.dev-dependencies]
+pylint = "^2.9.5"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
