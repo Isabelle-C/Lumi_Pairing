@@ -798,28 +798,63 @@ def time_convert_format(Paired):
             Paired2[day][i] = store
     return Paired2
 
-if len(Unpaired) != 0:
+unpaired_tutor_list = []
+paired_tutors = Paired['Tutor'].tolist()
+
+for i in range(0,tutor_name_list):
+    if tutor_name_list[i] not in paired_tutors:
+        unpaired_tutor_list.append(tutor_name_list[i])
+
+if len(unpaired_tutor_list) != 0 and len(Unpaired) != 0:
     for i in range(0,len(Unpaired)):
         s_name = Unpaired['Student'][i]
         selected = Other_option_df[Other_option_df['Student'] == s_name]
-        option_list = selected['Other Option']
+        option_list = selected['Other Option'][0]
         for o in range(0,len(option_list)):
-            for k in range(0,len(Paired2)):
-                if Paired2['Tutor'][k] = option_list[o]:
-                    #TODO : need to fix logic here
-                    row = df[df['Student Name'] == s_name and df['Tutor Name'] == option_list[o]]
-                    Paired2['Tutor'][k] = row['Tutor Name']
-                    Paired2['Student'][k] = row['Student Name']
-                    Paired2['Student Email'][k] = row['Student Email']
-                    Paired2['Tutor Email'][k] = row['Tutor Email']
-                    Paired2['Monday'][k] = row['Monday']
-                    Paired2['Tuesday'][k] = row['Tuesday']
-                    Paired2['Wednesday'][k] = row['Wednesday']
-                    Paired2['Thursday'][k] = row['Thursday']
-                    Paired2['Friday'][k] =  row['Friday']
-                    Paired2['Saturday'][k] = row['Saturday']
-                    Paired2['Sunday'][k] = row['Sunday']
-                    break
+            for k in range(0,len(Paired)):
+                if Paired['Tutor'][k] == option_list[o]:
+                    replace_s = Paired['Student'][k]
+                    replace_s_options_table = Other_option_df[Other_option_df['Student'] == replace_s]
+                    replace_s_options = replace_s_options_table['Other Option'][0]
+                    for kk in range(0,len(unpaired_tutor_list)):
+                        for jj in range(0, len(replace_s_options)):
+                            if replace_s_options[jj] == unpaired_tutor_list[kk]:
+                                #TODO : need to fix logic here
+                                row = df[df['Student Name'] == s_name and df['Tutor Name'] == option_list[o]]
+                                Paired['Student'][k] = s_name
+                                Paired['Student Email'][k] = row['Student Email'][0]
+                                Paired['Tutor Email'][k] = row['Tutor Email'][0]
+                                Paired['Monday'][k] = row['Monday'][0]
+                                Paired['Tuesday'][k] = row['Tuesday'][0]
+                                Paired['Wednesday'][k] = row['Wednesday'][0]¡
+                                Paired['Thursday'][k] = row['Thursday'][0]
+                                Paired['Friday'][k] =  row['Friday'][0]
+                                Paired['Saturday'][k] = row['Saturday'][0]
+                                Paired['Sunday'][k] = row['Sunday'][0]
+                                if row['Tutor Language'][0] != row['Student Language'][0]:
+                                    Paired['Language'][k] = 'English'
+                                else:
+                                    Paired['Language'][k] = row['Tutor Language'][0]
+
+                                replace_row = df[df['Student Name'] == replace_s and df['Tutor Name'] == replace_s_options[jj]]
+                                if replace_row['Tutor Language'][0] != replace_row['Student Language'][0]:
+                                    insert_language = 'English'
+                                else:
+                                    insert_language = row['Tutor Language'][0]
+
+                                new_row = {'Student': replace_s, 'Tutor': replace_s_options[jj],
+                                           'Language': insert_language, 'Student Email': replace_row['Student Email'][0],
+                                           'Tutor Email': replace_row['Tutor Email'][0],
+                                           'Monday': replace_row['Monday'][0], 'Tuesday': replace_row['Tuesday'][0],
+                                           'Wednesday': replace_row['Wednesday'][0],'Thursday': replace_row['Wednesday'][0],
+                                           'Friday': replace_row['Wednesday'][0], 'Saturday': replace_row['Saturday'][0]
+                                            ,'Sunday': replace_row['Sunday'][0]}
+                                # append row to the dataframe
+                                Paired = Paired.append(new_row, ignore_index=True)
+
+                                break
+
+                break
 
 
 Paired2 = time_convert_format(Paired_Interest)
