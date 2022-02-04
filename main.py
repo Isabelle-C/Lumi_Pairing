@@ -735,7 +735,6 @@ Unpaired_name_list = unique(list(Unpaired['Student']))
 unpaired_interest_name_list = unique(list(Unpaired_Interest['Student']))
 
 
-
 lan = []
 for f in range(0, len(Unpaired_name_list)):
     selected = Unpaired[Unpaired['Student']==Unpaired_name_list[f]]
@@ -798,6 +797,30 @@ def time_convert_format(Paired):
 
             Paired2[day][i] = store
     return Paired2
+
+if len(Unpaired) != 0:
+    for i in range(0,len(Unpaired)):
+        s_name = Unpaired['Student'][i]
+        selected = Other_option_df[Other_option_df['Student'] == s_name]
+        option_list = selected['Other Option']
+        for o in range(0,len(option_list)):
+            for k in range(0,len(Paired2)):
+                if Paired2['Tutor'][k] = option_list[o]:
+                    #TODO : need to fix logic here
+                    row = df[df['Student Name'] == s_name and df['Tutor Name'] == option_list[o]]
+                    Paired2['Tutor'][k] = row['Tutor Name']
+                    Paired2['Student'][k] = row['Student Name']
+                    Paired2['Student Email'][k] = row['Student Email']
+                    Paired2['Tutor Email'][k] = row['Tutor Email']
+                    Paired2['Monday'][k] = row['Monday']
+                    Paired2['Tuesday'][k] = row['Tuesday']
+                    Paired2['Wednesday'][k] = row['Wednesday']
+                    Paired2['Thursday'][k] = row['Thursday']
+                    Paired2['Friday'][k] =  row['Friday']
+                    Paired2['Saturday'][k] = row['Saturday']
+                    Paired2['Sunday'][k] = row['Sunday']
+                    break
+
 
 Paired2 = time_convert_format(Paired_Interest)
 Paired2 = clean_up(Paired2)
