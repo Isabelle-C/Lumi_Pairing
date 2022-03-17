@@ -1302,6 +1302,7 @@ if __name__ == "__main__":
     # If a student is ELL student, both English and that language would show up if initial pairing was unsuccessful.
     # Other_option_df needs to be used with df if more information is needed.
 
+    print('---------------------Ignore Warnings above---------------------')
     print(f"Woohoo! We paired {len(Paired2)} students and tutors. The information is in Paired.csv")
     print(f"This is the list of unpaired tutors: {unpaired_tutor_list}")
     print('Unpaired students are in Unpaired.csv. Other csv might be helpful for repairing.')
