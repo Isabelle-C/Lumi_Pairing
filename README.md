@@ -9,3 +9,4 @@ $ poetry init
 $ poetry install
 4. Activate the environment.
 $ poetry shell
+5. Run the command in following format: python ./main.py /path/to/students.csv /path/to/tutors.csv /path/for/all/outputs
